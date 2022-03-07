@@ -1,31 +1,8 @@
 import React, { useReducer } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
 
-const initialState = {
-    cart: [],
-    products: [],
-    user: null,
-    number: 0
-}
-
-function reducer(state, action) {
-    switch (action.type) {
-        case 'increment':
-            return { ...state, number: state.number + 2 };
-        case 'decrement':
-            return { ...state, number: state.number - 2 };
-        case 'multiply':
-            return { ...state, number: state.number * 7 };
-        case 'divide':
-            return { ...state, number: state.number / 25 };
-        case 'parseInt':
-            return { ...state, number: parseInt(state.number) };
-        case 'addN':
-            return { ...state, number: state.number + action.payload };
-        default:
-            throw new Error();
-    }
-}
+import { initialState, reducer } from '../../store';
+import { addN, decrement, increment } from '../../store/actions'
 
 const UseReducer = (props) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -41,10 +18,10 @@ const UseReducer = (props) => {
                 <span className="text">{state.number}</span>
                 <div>
                     <button className="btn"
-                        onClick={() => dispatch({ type: 'decrement' })}> -2
+                        onClick={() => decrement(dispatch)}> -2
                     </button>
                     <button className="btn"
-                        onClick={() => dispatch({ type: 'increment' })}> +2
+                        onClick={() => increment(dispatch)}> +2
                     </button>
                     <button className="btn"
                         onClick={() => dispatch({ type: 'multiply' })}> *7
@@ -56,7 +33,7 @@ const UseReducer = (props) => {
                         onClick={() => dispatch({ type: 'parseInt' })}> Int
                     </button>
                     <button className="btn"
-                        onClick={() => dispatch({ type: 'addN', payload: 20 })}> +20
+                        onClick={() => addN(dispatch, 20)}> +20
                     </button>
                 </div>
             </div>
